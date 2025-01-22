@@ -5,7 +5,8 @@ import * as dotenv from 'dotenv';
 
 const configFileName = 'config.toml';
 
-//dotenv only used for locally
+//dotenv only used for locally 
+//in prod env set in ECS
 dotenv.config();
 
 interface Config {
@@ -33,10 +34,6 @@ type RecursivePartial<T> = {
 
 
 const loadConfig = () =>
-
-  //dotenv loading only for local
-  //env set at runtime in prod
-  
   
 
   toml.parse(
@@ -50,7 +47,7 @@ export const getSimilarityMeasure = () =>
 
 export const getKeepAlive = () => loadConfig().GENERAL.KEEP_ALIVE;
 
-export const getOpenaiApiKey = () => loadConfig().API_KEYS.OPENAI
+export const getOpenaiApiKey = () => loadConfig().API_KEYS.OPENAI || process.env.OPENAI_API_KEY
 
 
 
