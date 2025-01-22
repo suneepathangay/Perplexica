@@ -1,8 +1,12 @@
 import fs from 'fs';
 import path from 'path';
 import toml from '@iarna/toml';
+import * as dotenv from 'dotenv';
 
 const configFileName = 'config.toml';
+
+//dotenv only used for locally
+dotenv.config();
 
 interface Config {
   GENERAL: {
@@ -26,7 +30,15 @@ type RecursivePartial<T> = {
   [P in keyof T]?: RecursivePartial<T[P]>;
 };
 
+
+
 const loadConfig = () =>
+
+  //dotenv loading only for local
+  //env set at runtime in prod
+  
+  
+
   toml.parse(
     fs.readFileSync(path.join(__dirname, `../${configFileName}`), 'utf-8'),
   ) as any as Config;
@@ -38,7 +50,9 @@ export const getSimilarityMeasure = () =>
 
 export const getKeepAlive = () => loadConfig().GENERAL.KEEP_ALIVE;
 
-export const getOpenaiApiKey = () => loadConfig().API_KEYS.OPENAI;
+export const getOpenaiApiKey = () => loadConfig().API_KEYS.OPENAI
+
+
 
 export const getGroqApiKey = () => loadConfig().API_KEYS.GROQ;
 
